@@ -35,8 +35,6 @@ resource "docker_container" "sonarqube" {
   name         = "iv-buildsystem-sonarqube"
   hostname     = "sonarqube"
   restart      = "unless-stopped"
-  wait         = true
-  wait_timeout = 120
 
   # Environment variables for the SonarQube container.
   env = [
