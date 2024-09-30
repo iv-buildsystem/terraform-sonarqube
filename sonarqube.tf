@@ -51,6 +51,6 @@ resource "docker_container" "sonarqube" {
     name = data.docker_network.network.name
     aliases = ["sonarqube"]
   }
-  
+
   depends_on = [mysql_grant.sonarqube]
 }
