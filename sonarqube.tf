@@ -10,7 +10,7 @@ resource "mysql_database" "sonarqube" {
 resource "mysql_user" "sonarqube" {
   user               = var.sonar_db_username
   plaintext_password = var.sonar_db_password
-  host               = "iv-buildsystem-sonarqube.${var.docker_network_name}"
+  host               = "iv-buildsystem-sonarqube.${data.docker_network.network.name}"
   depends_on         = [mysql_database.sonarqube]
 }
 
@@ -48,9 +48,9 @@ resource "docker_container" "sonarqube" {
 
   # Network configuration for the SonarQube container.
   networks_advanced {
-    name = var.docker_network_name
+    name = data.docker_network.network.name
     aliases = ["sonarqube"]
   }
-
+  
   depends_on = [mysql_grant.sonarqube]
 }
