@@ -1,10 +1,10 @@
 # PostgreSQL Configuration
 
 provider "postgresql" {
-  host = var.postgresql_host
-  port = var.postgresql_port
-  username = var.postgresql_username
-  password = var.postgresql_password
+  host = var.postgres_host
+  port = var.postgres_port
+  username = var.postgres_root_user
+  password = var.postgres_root_password
   sslmode = "disable"
 }
 

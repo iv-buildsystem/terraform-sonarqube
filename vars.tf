@@ -14,22 +14,22 @@ variable "docker_network_name" {
 }
 
 # --== PostgreSQL ==--
-variable "postgresql_host" {
+variable "postgres_host" {
   type      = string
   default   = "localhost:5432"
 }
 
-variable "postgresql_port" {
+variable "postgres_port" {
   type      = number
   default   = 5432
 }
 
-variable "postgresql_username" {
+variable "postgres_root_user" {
   type      = string
   default   = "postgres"
 }
 
-variable "postgresql_password" {
+variable "postgres_root_password" {
   type      = string
   sensitive = true
 }
