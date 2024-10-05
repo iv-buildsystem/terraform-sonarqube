@@ -4,16 +4,10 @@ terraform {
       source  = "kreuzwerker/docker"
       version = "= 3.0.2"
     }
-    mysql = {
-      source  = "bangau1/mysql"
-      version = "= 1.10.4"
+    postgresql = {
+      source  = "cyrilgdn/postgresql"
+      version = "= 1.23.0"
     }
   }
 }
 
-provider "docker" {
-}
-
-data "docker_network" "network" {
-  name = var.docker_network_name
-}
