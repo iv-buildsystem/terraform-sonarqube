@@ -6,17 +6,32 @@ resource "docker_image" "sonarqube" {
   keep_locally = true
 }
 
+# Create a named volume for SonarQube data
+resource "docker_volume" "sonarqube_data" {
+  name = "sonarqube_data"
+}
+
+# Create a named volume for SonarQube extensions
+resource "docker_volume" "sonarqube_extensions" {
+  name = "sonarqube_extensions"
+}
+
 # This resource creates and configures a Docker container for SonarQube.
 resource "docker_container" "sonarqube" {
   image        = docker_image.sonarqube.image_id
   name         = "${var.sonar_container_prefix}sonarqube"
   hostname     = "sonarqube"
   restart      = "unless-stopped"
+  network_mode = "bridge"
 
-  #ports {
-  #  internal = 9000
-  #  external = 9000
-  #}
+  # Optional port mapping
+  dynamic "ports" {
+    for_each = var.sonar_enable_port_mapping ? [1] : []
+    content {
+      internal = 9000  # Fixed internal port for SonarQube
+      external = var.sonar_host_port  # Map to the host-defined port
+    }
+  }
 
   # Environment variables for the SonarQube container.
   env = [
@@ -26,10 +41,18 @@ resource "docker_container" "sonarqube" {
     "SONAR_JDBC_PASSWORD=${var.sonar_db_password}",
   ]
 
-  # Volumes for the SonarQube container.
+  # Use the named volume for SonarQube data
   volumes {
-    host_path      = var.sonar_volume_host_path
+    volume_name    = docker_volume.sonarqube_data.name
     container_path = "/opt/sonarqube/data"
+    read_only      = false
+  }
+
+  # Use the named volume for SonarQube extensions
+  volumes {
+    volume_name    = docker_volume.sonarqube_extensions.name
+    container_path = "/opt/sonarqube/extensions"
+    read_only      = false
   }
 
   # Network configuration for the SonarQube container.

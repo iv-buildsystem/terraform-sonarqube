@@ -26,5 +26,5 @@ resource "postgresql_grant" "sonarqube" {
   database    = postgresql_database.sonarqube.name
   schema      = "public"
   object_type = "schema"
-  privileges  = ["ALL"]
+  privileges  = ["CREATE", "USAGE"]
 }

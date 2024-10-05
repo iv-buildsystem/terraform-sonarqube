@@ -57,3 +57,15 @@ variable "sonar_db_password" {
   type      = string
   sensitive = true
 }
+
+variable "sonar_enable_port_mapping" {
+  description = "Enable port mapping for SonarQube"
+  type        = bool
+  default     = false  # Default to false, meaning no port mapping
+}
+
+variable "sonar_host_port" {
+  description = "Host port to map to the SonarQube container's port 9000"
+  type        = number
+  default     = 9000  # Default to 9000; change if needed
+}
