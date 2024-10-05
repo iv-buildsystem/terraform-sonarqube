@@ -9,7 +9,7 @@ variable "docker_host" {
   default = "unix:///var/run/docker.sock"
 }
 
-variable "docker_network_name" {
+variable "docker_network" {
   type    = string
 }
 

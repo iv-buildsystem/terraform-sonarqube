@@ -5,5 +5,5 @@ provider "docker" {
 }
 
 data "docker_network" "network" {
-  name = var.docker_network_name
+  name = var.docker_network
 }
